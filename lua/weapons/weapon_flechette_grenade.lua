@@ -165,12 +165,7 @@ function SWEP:ThrowIncendiaryGrenadeLow()
 	local phys = ent:GetPhysicsObject()
 	if ( not phys:IsValid() ) then ent:Remove() return end
  
-	-- Now we apply the force - so the chair actually throws instead 
-	-- of just falling to the ground. You can play with this value here
-	-- to adjust how fast we throw it.
-	-- Now that this is the last use of the aimvector vector we created,
-	-- we can directly modify it instead of creating another copy
-	aimvec:Mul( 325 ) -- Happy with how throwing lokos now to add some more forece
+	aimvec:Mul( 325 ) -- Happy with how throwing looks now to add some more forece
 	aimvec:Add( VectorRand( -2, 2 ) ) -- Add a random vector with elements [-10, 10)
 	phys:AddAngleVelocity(Vector(math.random(-300, -250), math.random(-200, -100), math.random(-200, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
