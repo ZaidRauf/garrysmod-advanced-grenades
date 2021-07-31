@@ -3,17 +3,19 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
+
 function ENT:Initialize()
     self.incendiaryTime = CurTime() + 4.5
     self.timeToLive = CurTime() + 30
-    
+    self.notStuck = true
+
     self:SetModel("models/Items/grenadeAmmo.mdl")
     
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
 
-    self.isRunning = falseq
+    self.isRunning = false
     local phys = self:GetPhysicsObject()
 
     if phys:IsValid() then
@@ -23,12 +25,15 @@ function ENT:Initialize()
 end
 
 function ENT:StartTouch(touchEnt)
-    print("Grenade Stuck to: ", touchEnt)
-    constraint.Weld(self, touchEnt, 0, 0, 0, true, true)
+    if self.notStuck then
+        self.notStuck = false;
+        print("Grenade Stuck to: ", touchEnt)
+        constraint.Weld(self, touchEnt, 0, 0, 0, true, true)
 
-    timer.Create("explodeTimer"..self:EntIndex(), 2, 1, function() 
-        self:Remove()
-    end)
+        timer.Create("explodeTimer"..self:EntIndex(), 2, 1, function() 
+            self:Remove()
+        end)
+    end
 end
 
 -- function ENT:PhysicsCollide(colData, collider)
