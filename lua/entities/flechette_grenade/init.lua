@@ -30,7 +30,7 @@ function ENT:Think()
 end
 
 function ENT:OnRemove()
-	SuppressHostEvents( NULL ) -- Do not suppress the flechette effects
+	SuppressHostEvents( NULL )
 
     -- Use to be 75, 20 , 20
 
