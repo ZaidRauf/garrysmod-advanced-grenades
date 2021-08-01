@@ -22,6 +22,7 @@ function ENT:Initialize()
         phys:Wake()
     end
 
+
 end
 
 function ENT:StartTouch(touchEnt)
@@ -36,11 +37,19 @@ function ENT:StartTouch(touchEnt)
     end
 end
 
--- function ENT:PhysicsCollide(colData, collider)
---     print("PhysCollide: ", colData, collider)
---     constraint.Weld(self, colData.HitEntity, 0, 0, 0, true, true)
--- end
+function ENT:PhysicsCollide(colData, collider)``
+    if self.notStuck and (colData.HitEntity:EntIndex() == 0) then
+        self.notStuck = false;
 
+        physObj = self:GetPhysicsObject()
+        -- physObj:SetVelocity(Vector(0, 0, 0))
+        physObj:EnableMotion(false)
+
+        timer.Create("explodeTimer"..self:EntIndex(), 2, 1, function() 
+            self:Remove()
+        end)
+    end
+end
 
 function ENT:OnRemove()
     self:StopSound(self.ThermiteSound)
