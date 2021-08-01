@@ -32,8 +32,6 @@ function SWEP:Initialize()
 	self:SetHoldType("grenade")
 end
 
-
-
 -- Called when the left mouse button is pressed
 function SWEP:PrimaryAttack()
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
@@ -126,6 +124,8 @@ function SWEP:ThrowIncendiaryGrenadeHigh()
 	-- we can directly modify it instead of creating another copy
 	aimvec:Mul( 1245 ) -- Happy with how throwing lokos now to add some more forece
 	aimvec:Add( VectorRand( -10, 10 ) ) -- Add a random vector with elements [-10, 10)
+	print(owner:GetVelocity())
+	aimvec:Add(owner:GetVelocity() * 1.05)
 	-- aimvec:Add( ownerPhys:GetVelocity() ) -- Need to account for intertia
 	phys:AddAngleVelocity(Vector(math.random(-500, -250), math.random(-250, -100), math.random(-250, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
@@ -181,8 +181,11 @@ function SWEP:ThrowIncendiaryGrenadeLow()
 	-- to adjust how fast we throw it.
 	-- Now that this is the last use of the aimvector vector we created,
 	-- we can directly modify it instead of creating another copy
+	
 	aimvec:Mul( 325 ) -- Happy with how throwing lokos now to add some more forece
 	aimvec:Add( VectorRand( -2, 2 ) ) -- Add a random vector with elements [-10, 10)
+	print(owner:GetVelocity())
+	aimvec:Add(owner:GetVelocity() * 1.05)
 	phys:AddAngleVelocity(Vector(math.random(-300, -250), math.random(-200, -100), math.random(-200, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
 end
