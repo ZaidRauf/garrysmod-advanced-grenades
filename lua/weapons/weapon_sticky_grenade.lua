@@ -82,6 +82,7 @@ function SWEP:ThrowIncendiaryGrenadeHigh()
 
 	-- Always make sure that created entities are actually created!
 	if ( not ent:IsValid() ) then return end
+	ent:SetOwner(owner)
 
 	-- This is the same as owner:EyePos() + (self.Owner:GetAimVector() * 16)
 	-- but the vector methods prevent duplicitous objects from being created

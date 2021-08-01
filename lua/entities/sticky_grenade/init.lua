@@ -37,7 +37,7 @@ function ENT:StartTouch(touchEnt)
     end
 end
 
-function ENT:PhysicsCollide(colData, collider)``
+function ENT:PhysicsCollide(colData, collider)
     if self.notStuck and (colData.HitEntity:EntIndex() == 0) then
         self.notStuck = false;
 
@@ -55,6 +55,8 @@ function ENT:OnRemove()
     self:StopSound(self.ThermiteSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
 	explosion:SetPos( self:GetPos() ) -- Put the position of the explosion at the position of the entity
+    print(self:GetOwner())
+    explosion:SetOwner(self:GetOwner())
 	explosion:Spawn() -- Spawn the explosion
 	explosion:SetKeyValue( "iMagnitude", "150" ) -- the magnitude of the explosion
 	explosion:Fire( "Explode", 0, 0 ) -- explode
