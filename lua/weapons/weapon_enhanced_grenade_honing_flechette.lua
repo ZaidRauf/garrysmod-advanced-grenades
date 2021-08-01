@@ -4,4 +4,4 @@ SWEP.Instructions		= "WIP"
 
 SWEP.Spawnable = true
 
-SWEP.GrenadeEntity = "honing_flechette_grenade"
+SWEP.GrenadeEntity = "ent_enhanced_grenade_honing_flechette"

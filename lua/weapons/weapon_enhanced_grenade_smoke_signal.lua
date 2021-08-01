@@ -4,4 +4,4 @@ SWEP.Instructions		= "WIP"
 
 SWEP.Spawnable = true
 
-SWEP.GrenadeEntity = "smokesignal_grenade"
+SWEP.GrenadeEntity = "ent_enhanced_grenade_smoke_signal"
