@@ -1,8 +1,8 @@
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
-ENT.PrintName = "Honing Flechette Grenade"
-ENT.Spawnable = true
+ENT.PrintName = "Flechette Grenade"
+ENT.Spawnable = false
 
 ENT.ThermiteSound = Sound( "npc/env_headcrabcanister/hiss.wav" )
 ENT.SoundTimer = CurTime() + 4.5
