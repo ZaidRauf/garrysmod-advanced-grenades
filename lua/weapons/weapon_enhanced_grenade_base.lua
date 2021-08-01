@@ -139,7 +139,7 @@ function SWEP:ThrowGrenadeLow()
 
 	if ( CLIENT ) then return end
 	
-	local ent = ents.Create( SWEP.GrenadeEntity )
+	local ent = ents.Create( self.GrenadeEntity )
 
 	-- Always make sure that created entities are actually created!
 	if ( not ent:IsValid() ) then return end
