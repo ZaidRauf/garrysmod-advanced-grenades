@@ -7,7 +7,6 @@ end
 function ENT:Initialize()
     self.incendiaryEmitter = ParticleEmitter( self:GetPos() ) -- Particle emitter in this position
     self.dlight = nil
-    self.emitSoundFlag = false
 end
 
 
@@ -38,11 +37,6 @@ function ENT:Think()
 
         if (not self.dlight) then
             self.dlight = DynamicLight( self:EntIndex() )
-        end
-
-        if (not self.emitSoundFlag) then
-            self:EmitSound( self.ThermiteSound )
-            self.emitSoundFlag = true;
         end
 
         if ( self.dlight ) then

@@ -6,13 +6,10 @@ end
 
 function ENT:Initialize()
     self.smokeEmitter = ParticleEmitter( self:GetPos() ) -- Particle emitter in this position
-    self.emitSoundFlag = false
 end
 
 function ENT:Think()
-
     if self:GetSmokeActive() then
-
         if IsValid(self.smokeEmitter) then
             local part = self.smokeEmitter:Add( "effects/yellowflare",  self:GetPos() ) -- Create a new particle at pos
             if ( part ) then
@@ -33,12 +30,6 @@ function ENT:Think()
                 part:SetCollide(true)
             end
         end
-    
-        if (not self.emitSoundFlag) then
-            self:EmitSound( self.SmokeSound )
-            self.emitSoundFlag = true;
-        end
-
     end
 end
 

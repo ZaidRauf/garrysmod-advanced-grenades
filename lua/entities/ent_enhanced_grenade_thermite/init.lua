@@ -20,12 +20,26 @@ function ENT:Initialize()
         phys:Wake()
     end
 
+    self:EmitSound( self.TickSound )
+    timer.Create("soundTickTimer"..self:EntIndex(), 0.4, 0, function()
+        self:EmitSound( self.TickSound )
+    end)
 
     timer.Create("incendiaryStartTimer"..self:GetName()..self:EntIndex(), self.incendiaryTime, 1, function() 
+        timer.Remove("soundTickTimer"..self:EntIndex())
+        self:StopSound(self.TickSound)
+
+        self:EmitSound( self.ThermiteSound )
+        timer.Create("soundThermiteTimer"..self:EntIndex(), SoundDuration(self.ThermiteSound), 0, function() 
+            self:EmitSound( self.ThermiteSound )
+        end)
+
         self:SetIncendiaryActive(true)
     end)
 
     timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), self.timeToLive, 1, function() 
+        self:StopSound(self.ThermiteSound)
+        timer.Remove("soundThermiteTimer"..self:EntIndex())
         self:Remove()
     end)
 

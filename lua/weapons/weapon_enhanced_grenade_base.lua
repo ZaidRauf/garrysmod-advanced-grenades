@@ -126,7 +126,7 @@ function SWEP:ThrowGrenadeHigh()
 	-- we can directly modify it instead of creating another copy
 	aimvec:Mul( 1245 ) -- Happy with how throwing lokos now to add some more forece
 	aimvec:Add( VectorRand( -10, 10 ) ) -- Add a random vector with elements [-10, 10)
-	aimvec:Add(owner:GetVelocity() * 1.05)
+	aimvec:Add(owner:GetVelocity() * 0.90)
 	-- aimvec:Add( ownerPhys:GetVelocity() ) -- Need to account for intertia
 	phys:AddAngleVelocity(Vector(math.random(-500, -250), math.random(-250, -100), math.random(-250, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
@@ -185,7 +185,7 @@ function SWEP:ThrowGrenadeLow()
 	
 	aimvec:Mul( 325 ) -- Happy with how throwing lokos now to add some more forece
 	aimvec:Add( VectorRand( -2, 2 ) ) -- Add a random vector with elements [-10, 10)
-	aimvec:Add(owner:GetVelocity() * 1.05)
+	aimvec:Add(owner:GetVelocity() * 0.65)
 	phys:AddAngleVelocity(Vector(math.random(-300, -250), math.random(-200, -100), math.random(-200, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
 end
