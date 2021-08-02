@@ -4,8 +4,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:Initialize()
-    self.incendiaryTime = CurTime() + 4.5
-    self.timeToLive = CurTime() + 30
+    self.smokeStartTime = 4.5
+    self.timeToLive = 30
     
     self:SetModel("models/Items/grenadeAmmo.mdl")
     
@@ -13,25 +13,20 @@ function ENT:Initialize()
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
 
-    self.isRunning = falseq
+    self.isRunning = false
     local phys = self:GetPhysicsObject()
 
     if phys:IsValid() then
         phys:Wake()
     end
 
-end
-
-function ENT:Think()
-    if ((not self:GetIncendiaryActive()) and (CurTime() >= self.incendiaryTime)) then
+    timer.Create("smokeStartTimer"..self:GetName()..self:EntIndex(), self.smokeStartTime, 1, function() 
         self:SetIncendiaryActive(true)
-        -- self:Ignite(15, 350)
-    end
+    end)
 
-    if CurTime() >= self.timeToLive then
-        self:Remove()
-    end
-
+    timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), self.timeToLive, 1, function() 
+        self:Remqwd qove()
+    end)
 end
 
 function ENT:OnRemove()
