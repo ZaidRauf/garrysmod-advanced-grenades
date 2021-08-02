@@ -22,9 +22,17 @@ function ENT:Initialize()
     timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), self.timeToLive, 1, function() 
         self:Remove()
     end)
+
+    self:EmitSound( self.TickSound )
+    timer.Create("soundTickTimer"..self:EntIndex(), 0.4, 0, function() 
+        self:EmitSound( self.TickSound )
+    end)
 end
 
 function ENT:OnRemove()
+    timer.Remove("soundTickTimer"..self:EntIndex())
+    self:StopSound(self.TickSound)
+
 	SuppressHostEvents( NULL ) -- Do not suppress the flechette effects
 
     local playerTable = {}
@@ -86,7 +94,6 @@ function ENT:OnRemove()
         end
     end
 
-    self:StopSound(self.ThermiteSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
 	if ( not explosion:IsValid() ) then return end
 

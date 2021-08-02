@@ -23,9 +23,16 @@ function ENT:Initialize()
         self:Remove()
     end)
 
+    self:EmitSound( self.TickSound )
+    timer.Create("soundTickTimer"..self:EntIndex(), 0.4, 0, function() 
+        self:EmitSound( self.TickSound )
+    end)
 end
 
 function ENT:OnRemove()
+    timer.Remove("soundTickTimer"..self:EntIndex())
+    self:StopSound(self.TickSound)
+
 	SuppressHostEvents( NULL )
 
     for i=1,30 do
@@ -70,7 +77,6 @@ function ENT:OnRemove()
         ent:SetVelocity( directionVec )  
     end
 
-    self:StopSound(self.ThermiteSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
 	if ( not explosion:IsValid() ) then return end
 

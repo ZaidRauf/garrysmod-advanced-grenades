@@ -36,7 +36,7 @@ function ENT:Think()
             end
         end
 
-        if not IsValid(self.dlight) then
+        if (not self.dlight) then
             self.dlight = DynamicLight( self:EntIndex() )
         end
 
@@ -45,7 +45,7 @@ function ENT:Think()
             self.emitSoundFlag = true;
         end
 
-        if IsValid(self.dlight) then
+        if ( self.dlight ) then
             self.dlight.pos = self:GetPos()
             self.dlight.r = 255
             self.dlight.g = 255

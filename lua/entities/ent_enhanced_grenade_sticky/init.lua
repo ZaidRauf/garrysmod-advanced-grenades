@@ -20,7 +20,10 @@ function ENT:Initialize()
         phys:Wake()
     end
 
-
+    self:EmitSound( self.TickSound )
+    timer.Create("soundTickTimer"..self:EntIndex(), 0.4, 0, function() 
+        self:EmitSound( self.TickSound )
+    end)
 end
 
 function ENT:StartTouch(touchEnt)
@@ -50,9 +53,11 @@ function ENT:PhysicsCollide(colData, collider)
 end
 
 function ENT:OnRemove()
-    self:StopSound(self.ThermiteSound)
+    timer.Remove("soundTickTimer"..self:EntIndex())
+    self:StopSound(self.TickSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
 	if ( not explosion:IsValid() ) then return end
+
     explosion:SetOwner(self:GetOwner())
     explosion:SetPos( self:GetPos() ) -- Put the position of the explosion at the position of the entity
 	explosion:Spawn() -- Spawn the explosion
