@@ -24,6 +24,8 @@ function ENT:Initialize()
     timer.Create("soundTickTimer"..self:EntIndex(), 0.4, 0, function() 
         self:EmitSound( self.TickSound )
     end)
+
+    -- util.SpriteTrail( self, 0, Color( 255, 0, 0 ), false, 5, 0, 1, 1/5 * 0.5, "trails/laser" )
 end
 
 function ENT:StartTouch(touchEnt)

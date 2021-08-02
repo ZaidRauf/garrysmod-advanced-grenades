@@ -32,49 +32,54 @@ SWEP.GrenadeEntity = ""
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")
+	self.startHighThrow = false
+	self.startLowThrow = false
 end
 
 -- Called when the left mouse button is pressed
 function SWEP:PrimaryAttack()
-	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 
-	self:SendWeaponAnim(ACT_VM_THROW)
-
-	self:TakePrimaryAmmo( 1 )
-
-	-- self:SendWeaponAnim(ACT_VM_PULLBACK_LOW)
-	
-	-- This weapon is 'automatic'. This function call below defines
-	-- the rate of fire. Here we set it to shoot every 0.5 seconds.
-	self:SetNextPrimaryFire( CurTime() + 2.4 )
-	self:SetNextSecondaryFire( CurTime() + 2.4 )
-
-	-- Call 'ThrowChair' on self with this model
-	self:ThrowGrenadeHigh()
+	if not self.startLowThrow and not self.startHighThrow then
+		self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
+		self.startHighThrow = true
+	end
 
 end
 
 function SWEP:SecondaryAttack()
-	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 
-	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
-
-	self:TakePrimaryAmmo( 1 )
-	self:SetNextPrimaryFire( CurTime() + 2.4 )
-	self:SetNextSecondaryFire( CurTime() + 2.4 )
-
-	self:ThrowGrenadeLow()
-
-	-- print('Eye Position:: ', self:GetOwner():EyePos())
-	-- print('Aim Vector:: ', self:GetOwner():GetAimVector())
-	-- print('\n')
+	if not self.startLowThrow and not self.startHighThrow then
+		self:SendWeaponAnim(ACT_VM_PULLBACK_LOW)
+		self.startLowThrow = true
+	end
 
 end
 
+function SWEP:Think()
+   local ply = self:GetOwner()
+   if not IsValid(ply) then return end
+   
+   if self.startHighThrow and not ply:KeyDown(IN_ATTACK) then
+		self.startHighThrow = false
+		self:ThrowGrenadeHigh()
+	end
+
+   if self.startLowThrow and not ply:KeyDown(IN_ATTACK2) then
+		self.startLowThrow = false
+		self:ThrowGrenadeLow()
+	end
+end
 
 function SWEP:ThrowGrenadeHigh()
 	local owner = self:GetOwner()
 	if ( not owner:IsValid() ) then return end
+
+	self:TakePrimaryAmmo( 1 )
+	self:SetNextPrimaryFire( CurTime() + 1.5 )
+	self:SetNextSecondaryFire( CurTime() + 1.5 )
+
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	self:SendWeaponAnim(ACT_VM_THROW)
 
 	if ( CLIENT ) then return end
 	
@@ -130,12 +135,25 @@ function SWEP:ThrowGrenadeHigh()
 	-- aimvec:Add( ownerPhys:GetVelocity() ) -- Need to account for intertia
 	phys:AddAngleVelocity(Vector(math.random(-500, -250), math.random(-250, -100), math.random(-250, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
+
+	timer.Create("animTimer1"..self:EntIndex(), 0.4, 1, function()
+		timer.Remove("animTimer1"..self:EntIndex())
+		if ( not owner:IsValid() ) then return end
+		self:SendWeaponAnim(ACT_VM_DRAW)
+	end)
 end
 
 
 function SWEP:ThrowGrenadeLow()
 	local owner = self:GetOwner()
 	if ( not owner:IsValid() ) then return end
+
+	self:TakePrimaryAmmo( 1 )
+	self:SetNextPrimaryFire( CurTime() + 1.5 )
+	self:SetNextSecondaryFire( CurTime() + 1.5 )
+
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 
 	if ( CLIENT ) then return end
 	
@@ -170,22 +188,20 @@ function SWEP:ThrowGrenadeLow()
 	-- Set the angles to the player'e eye angles. Then spawn it.
 	ent:SetAngles( owner:EyeAngles() + Angle(math.random(-10, 10), 0, math.random(-45, -60)))
 	ent:Spawn()
- 
-	-- Now get the physics object. Whenever we get a physics object
-	-- we need to test to make sure its valid before using it.
-	-- If it isn't then we'll remove the entity.
+
 	local phys = ent:GetPhysicsObject()
 	if ( not phys:IsValid() ) then ent:Remove() return end
- 
-	-- Now we apply the force - so the chair actually throws instead 
-	-- of just falling to the ground. You can play with this value here
-	-- to adjust how fast we throw it.
-	-- Now that this is the last use of the aimvector vector we created,
-	-- we can directly modify it instead of creating another copy
-	
+
 	aimvec:Mul( 325 ) -- Happy with how throwing lokos now to add some more forece
 	aimvec:Add( VectorRand( -2, 2 ) ) -- Add a random vector with elements [-10, 10)
 	aimvec:Add(owner:GetVelocity() * 0.65)
 	phys:AddAngleVelocity(Vector(math.random(-300, -250), math.random(-200, -100), math.random(-200, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
+
+
+	timer.Create("animTimer2"..self:EntIndex(), 0.6, 1, function()
+		timer.Remove("animTimer2"..self:EntIndex())
+		if ( not owner:IsValid() ) then return end
+		self:SendWeaponAnim(ACT_VM_DRAW)
+	end)
 end
