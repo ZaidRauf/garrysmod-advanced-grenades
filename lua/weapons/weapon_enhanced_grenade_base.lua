@@ -1,31 +1,25 @@
-SWEP.PrintName			= "Enhanced Grenade Base" -- This will be shown in the spawn menu, and in the weapon selection menu
-SWEP.Author			= "Memelord" -- These two options will be shown when you have the weapon highlighted in the weapon selection menu
-SWEP.Instructions		= "Base Grenade"
-
-SWEP.Spawnable = false
-SWEP.AdminOnly = true
-
+SWEP.PrintName				= "Enhanced Grenade Base" -- This will be shown in the spawn menu, and in the weapon selection menu
+SWEP.Author					= "Memelord" -- These two options will be shown when you have the weapon highlighted in the weapon selection menu
+SWEP.Instructions			= "Base Grenade"
+SWEP.Spawnable 				= false
+SWEP.AdminOnly 				= true
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= 6
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo		= "Grenade"
-
+SWEP.Primary.Ammo			= "Grenade"
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo		= "none"
-
-SWEP.Weight			= 5
-SWEP.AutoSwitchTo		= false
-SWEP.AutoSwitchFrom		= false
-
-SWEP.Slot			= 4
-SWEP.SlotPos			= 2
-SWEP.DrawAmmo			= true
-SWEP.DrawCrosshair		= true
-
-SWEP.ViewModel			= "models/weapons/c_grenade.mdl"
-SWEP.WorldModel			= "models/weapons/w_grenade.mdl"
+SWEP.Secondary.Ammo			= "none"
+SWEP.Weight					= 5
+SWEP.AutoSwitchTo			= false
+SWEP.AutoSwitchFrom			= false
+SWEP.Slot					= 4
+SWEP.SlotPos				= 2
+SWEP.DrawAmmo				= true
+SWEP.DrawCrosshair			= true
+SWEP.ViewModel				= "models/weapons/c_grenade.mdl"
+SWEP.WorldModel				= "models/weapons/w_grenade.mdl"
 SWEP.UseHands = true
 
 SWEP.GrenadeEntity = ""
@@ -136,6 +130,12 @@ function SWEP:ThrowGrenadeHigh()
 	phys:AddAngleVelocity(Vector(math.random(-500, -250), math.random(-250, -100), math.random(-250, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
 
+	if self:Ammo1() == 0 then
+		self:Remove()
+		owner:SwitchToDefaultWeapon()
+		return
+	end
+
 	timer.Create("animTimer1"..self:EntIndex(), 0.4, 1, function()
 		timer.Remove("animTimer1"..self:EntIndex())
 		if ( not owner:IsValid() ) then return end
@@ -198,6 +198,11 @@ function SWEP:ThrowGrenadeLow()
 	phys:AddAngleVelocity(Vector(math.random(-300, -250), math.random(-200, -100), math.random(-200, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
 
+	if self:Ammo1() == 0 then
+		self:Remove()
+		owner:SwitchToDefaultWeapon()
+		return
+	end
 
 	timer.Create("animTimer2"..self:EntIndex(), 0.6, 1, function()
 		timer.Remove("animTimer2"..self:EntIndex())
