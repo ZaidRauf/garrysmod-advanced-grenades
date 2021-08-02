@@ -75,8 +75,8 @@ function SWEP:ThrowGrenadeHigh()
 	if ( not owner:IsValid() ) then return end
 
 	self:TakePrimaryAmmo( 1 )
-	self:SetNextPrimaryFire( CurTime() + 1.5 )
-	self:SetNextSecondaryFire( CurTime() + 1.5 )
+	self:SetNextPrimaryFire( CurTime() + 1.6 )
+	self:SetNextSecondaryFire( CurTime() + 1.6 )
 
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:SendWeaponAnim(ACT_VM_THROW)
@@ -149,8 +149,8 @@ function SWEP:ThrowGrenadeLow()
 	if ( not owner:IsValid() ) then return end
 
 	self:TakePrimaryAmmo( 1 )
-	self:SetNextPrimaryFire( CurTime() + 1.5 )
-	self:SetNextSecondaryFire( CurTime() + 1.5 )
+	self:SetNextPrimaryFire( CurTime() + 1.6 )
+	self:SetNextSecondaryFire( CurTime() + 1.6 )
 
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
