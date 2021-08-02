@@ -11,7 +11,7 @@ end
 
 function ENT:Think()
 
-    if self:GetIncendiaryActive() then
+    if self:GetSmokeActive() then
 
         if IsValid(self.smokeEmitter) then
             local part = self.smokeEmitter:Add( "effects/yellowflare",  self:GetPos() ) -- Create a new particle at pos
@@ -35,7 +35,7 @@ function ENT:Think()
         end
     
         if (not self.emitSoundFlag) then
-            self:EmitSound( self.ThermiteSound )
+            self:EmitSound( self.SmokeSound )
             self.emitSoundFlag = true;
         end
 
@@ -44,5 +44,5 @@ end
 
 function ENT:OnRemove()
     self:StopSound(self.SmokeSound)
-    self.incendiaryEmitter:Finish()
+    self.smokeEmitter:Finish()
 end
