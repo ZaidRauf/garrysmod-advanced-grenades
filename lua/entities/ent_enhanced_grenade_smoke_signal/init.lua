@@ -21,17 +21,20 @@ function ENT:Initialize()
     end
 
     timer.Create("smokeStartTimer"..self:GetName()..self:EntIndex(), self.smokeStartTime, 1, function() 
-        self:SetIncendiaryActive(true)
+        self:SetSmokeActive(true)
     end)
 
     timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), self.timeToLive, 1, function() 
-        self:Remqwd qove()
+        self:Remove()
     end)
 end
 
+
 function ENT:OnRemove()
-    self:StopSound(self.ThermiteSound)
+    self:StopSound(self.SmokeSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
+	if ( not explosion:IsValid() ) then return end
+
 	explosion:SetPos( self:GetPos() ) -- Put the position of the explosion at the position of the entity
 	explosion:Spawn() -- Spawn the explosion
 	explosion:SetKeyValue( "iMagnitude", "0" ) -- the magnitude of the explosion
