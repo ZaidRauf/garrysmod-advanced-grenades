@@ -1,9 +1,10 @@
+AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
 function ENT:Initialize()
-    self.timeToLive = CurTime() + 4.5
+    self.timeToLive = 4.5
     
     self:SetModel("models/Items/grenadeAmmo.mdl")
     
@@ -11,21 +12,16 @@ function ENT:Initialize()
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
 
-    self.isRunning = falseq
+    self.isRunning = false
     local phys = self:GetPhysicsObject()
 
     if phys:IsValid() then
         phys:Wake()
     end
 
-end
-
-function ENT:Think()
-
-    if CurTime() >= self.timeToLive then
+    timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), self.timeToLive, 1, function() 
         self:Remove()
-    end
-
+    end)
 end
 
 function ENT:OnRemove()
@@ -36,7 +32,7 @@ function ENT:OnRemove()
     local numFlechettes = 35 -- Use to be 100
 
     for k,v in pairs(ents.FindInSphere(self:GetPos(), 350)) do
-        if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
+        if (v:IsPlayer() and not v == self:GetOwner()) or v:IsNPC() or v:IsNextBot() then
             playerTable[k] = v
             entityCount = entityCount + 1
         end
@@ -51,6 +47,7 @@ function ENT:OnRemove()
                 local ent = ents.Create( "hunter_flechette" )
                 if ( !IsValid( ent ) ) then return end
 
+                ent:SetOwner(self:GetOwner())
                 ent:SetPos( self:GetPos())
                 ent:Spawn()
                 ent:Activate()
@@ -63,10 +60,12 @@ function ENT:OnRemove()
         for i=1,leftoverFlechettes do
           	local ent = ents.Create( "hunter_flechette" )
             if ( !IsValid( ent ) ) then return end
-
+            
+            ent:SetOwner(self:GetOwner())
             ent:SetPos( self:GetPos())
             ent:Spawn()
             ent:Activate()
+
             local directionVec = Vector(math.Rand(-1.0, 1.0), math.Rand(-1.0, 1.0), math.Rand(0.0, 1.0)) * 2500
             ent:SetAngles(directionVec:Angle())
             ent:SetVelocity( directionVec )  
@@ -75,10 +74,12 @@ function ENT:OnRemove()
         for i=1,numFlechettes do
           	local ent = ents.Create( "hunter_flechette" )
             if ( !IsValid( ent ) ) then return end
-
+            
+            ent:SetOwner(self:GetOwner())
             ent:SetPos( self:GetPos())
             ent:Spawn()
             ent:Activate()
+            
             local directionVec = Vector(math.Rand(-1.0, 1.0), math.Rand(-1.0, 1.0), math.Rand(0.0, 1.0)) * 2500
             ent:SetAngles(directionVec:Angle())
             ent:SetVelocity( directionVec )  
@@ -87,6 +88,9 @@ function ENT:OnRemove()
 
     self:StopSound(self.ThermiteSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
+	if ( not explosion:IsValid() ) then return end
+
+    explosion:SetOwner(self:GetOwner())
 	explosion:SetPos( self:GetPos() ) -- Put the position of the explosion at the position of the entity
 	explosion:Spawn() -- Spawn the explosion
 	explosion:SetKeyValue( "iMagnitude", "10" ) -- the magnitude of the explosion
