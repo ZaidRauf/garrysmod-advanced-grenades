@@ -4,8 +4,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:Initialize()
-    self.incendiaryTime = CurTime() + 4.5
-    self.timeToLive = CurTime() + 20
+    self.incendiaryTime = 4.5
+    self.timeToLive = 20
     
     self:SetModel("models/Items/grenadeAmmo.mdl")
     
@@ -13,25 +13,25 @@ function ENT:Initialize()
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
 
-    self.isRunning = falseq
+    self.isRunning = false
     local phys = self:GetPhysicsObject()
 
     if phys:IsValid() then
         phys:Wake()
     end
 
+
+    timer.Create("incendiaryStartTimer"..self:GetName()..self:EntIndex(), self.incendiaryTime, 1, function() 
+        self:SetIncendiaryActive(true)
+    end)
+
+    timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), self.timeToLive, 1, function() 
+        self:Remove()
+    end)
+
 end
 
 function ENT:Think()
-    if ((not self:GetIncendiaryActive()) and (CurTime() >= self.incendiaryTime)) then
-        self:SetIncendiaryActive(true)
-        -- self:Ignite(15, 350)
-    end
-
-    if CurTime() >= self.timeToLive then
-        self:Remove()
-    end
-
     if self:GetIncendiaryActive() then
         for k,v in pairs(ents.FindInSphere(self:GetPos(), 125)) do
             if v:IsPlayer() or v:IsNPC() or v:IsNextBot() or v:IsVehicle() or v:IsRagdoll() or v:GetClass() == "prop_physics" then
@@ -40,13 +40,14 @@ function ENT:Think()
             end
         end
     end
-
 end
 
 function ENT:OnRemove()
     self:StopSound(self.ThermiteSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
-	explosion:SetPos( self:GetPos() ) -- Put the position of the explosion at the position of the entity
+	if ( not explosion:IsValid() ) then return end
+    
+    explosion:SetPos( self:GetPos() ) -- Put the position of the explosion at the position of the entity
 	explosion:Spawn() -- Spawn the explosion
 	explosion:SetKeyValue( "iMagnitude", "25" ) -- the magnitude of the explosion
 	explosion:Fire( "Explode", 0, 0 ) -- explode

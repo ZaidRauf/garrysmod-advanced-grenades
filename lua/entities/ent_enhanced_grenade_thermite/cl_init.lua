@@ -14,28 +14,29 @@ end
 function ENT:Think()
 
     if self:GetIncendiaryActive() then
-        -- local emitter = ParticleEmitter( self:GetPos() ) -- Particle emitter in this position
-        
-        for i=1,10 do
-            local part = self.incendiaryEmitter:Add( "effects/spark",  self:GetPos() ) -- Create a new particle at pos
-            if ( part ) then
-                part:SetDieTime( 1 ) -- How long the particle should "live"
 
-                part:SetStartAlpha( 255 ) -- Starting alpha of the particle
-                part:SetEndAlpha( 0 ) -- Particle size at the end if its lifetime
+        if IsValid(self.incendiaryEmitter) then
+            for i=1,10 do
+                local part = self.incendiaryEmitter:Add( "effects/spark",  self:GetPos() ) -- Create a new particle at pos
+                if ( part ) then
+                    part:SetDieTime( 1 ) -- How long the particle should "live"
 
-                part:SetStartSize( math.random() * 3) -- Starting size
-                part:SetEndSize( 0 ) -- Size when removed
+                    part:SetStartAlpha( 255 ) -- Starting alpha of the particle
+                    part:SetEndAlpha( 0 ) -- Particle size at the end if its lifetime
 
-                part:SetVelocity( VectorRand() * 125 ) -- Initial velocity of the particle
-                part:SetGravity( Vector( 0, 0, -300 ) ) -- Gravity of the particle
-                part:SetAngleVelocity( AngleRand() ) -- Gravity of the particle
-                part:SetBounce(0.9)
-                part:SetCollide(true)
+                    part:SetStartSize( math.random() * 3) -- Starting size
+                    part:SetEndSize( 0 ) -- Size when removed
+
+                    part:SetVelocity( VectorRand() * 125 ) -- Initial velocity of the particle
+                    part:SetGravity( Vector( 0, 0, -300 ) ) -- Gravity of the particle
+                    part:SetAngleVelocity( AngleRand() ) -- Gravity of the particle
+                    part:SetBounce(0.9)
+                    part:SetCollide(true)
+                end
             end
         end
 
-        if (not self.dlight) then
+        if not IsValid(self.dlight) then
             self.dlight = DynamicLight( self:EntIndex() )
         end
 
@@ -44,7 +45,7 @@ function ENT:Think()
             self.emitSoundFlag = true;
         end
 
-        if ( self.dlight ) then
+        if IsValid(self.dlight) then
             self.dlight.pos = self:GetPos()
             self.dlight.r = 255
             self.dlight.g = 255
