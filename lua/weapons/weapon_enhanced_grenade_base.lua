@@ -36,7 +36,7 @@ function SWEP:Deploy()
 
 	timer.Create("animTimerIdleDeploy"..self:EntIndex(), 1, 1, function()
 		timer.Remove("animTimerIdleDeploy"..self:EntIndex())
-		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_IDLE) end
+		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName and self:GetActivity() == 0) then self:SendWeaponAnim(ACT_VM_IDLE) end
 	end)
 end
 
