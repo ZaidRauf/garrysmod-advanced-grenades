@@ -32,18 +32,19 @@ end
 
 function SWEP:Deploy()
 	local owner = self:GetOwner()
+	self.throwTime = CurTime() + 0.25
 	if not ( self:IsValid() and owner:IsValid() and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then return end
 
-	timer.Create("animTimerIdleDeploy"..self:EntIndex(), 1, 1, function()
+	timer.Create("animTimerIdleDeploy"..self:EntIndex(), 0.2, 1, function()
 		timer.Remove("animTimerIdleDeploy"..self:EntIndex())
-		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName and self:GetActivity() == 0) then self:SendWeaponAnim(ACT_VM_IDLE) end
+		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_IDLE) end
 	end)
 end
 
 -- Called when the left mouse button is pressed
 function SWEP:PrimaryAttack()
 
-	if not self.startLowThrow and not self.startHighThrow then
+	if not self.startLowThrow and not self.startHighThrow and CurTime() > self.throwTime then
 		self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
 		self.startHighThrow = true
 	end
@@ -52,7 +53,7 @@ end
 
 function SWEP:SecondaryAttack()
 
-	if not self.startLowThrow and not self.startHighThrow then
+	if not self.startLowThrow and not self.startHighThrow and CurTime() > self.throwTime then
 		self:SendWeaponAnim(ACT_VM_PULLBACK_LOW)
 		self.startLowThrow = true
 	end
