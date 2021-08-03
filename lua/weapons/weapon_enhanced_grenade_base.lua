@@ -20,8 +20,9 @@ SWEP.DrawAmmo				= true
 SWEP.DrawCrosshair			= true
 SWEP.ViewModel				= "models/weapons/c_grenade.mdl"
 SWEP.WorldModel				= "models/weapons/w_grenade.mdl"
-SWEP.UseHands = true
+SWEP.UseHands 				= true
 
+SWEP.ViewModelFOV			= 54
 SWEP.GrenadeEntity = ""
 
 function SWEP:Initialize()
@@ -141,7 +142,7 @@ function SWEP:ThrowGrenadeHigh()
 	phys:AddAngleVelocity(Vector(math.random(-500, -250), math.random(-250, -100), math.random(-250, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
 
-	if self:Ammo1() == 0 then
+	if self:Ammo1() <= 0 then
 		self:Remove()
 		owner:SwitchToDefaultWeapon()
 		return
@@ -213,7 +214,7 @@ function SWEP:ThrowGrenadeLow()
 	phys:AddAngleVelocity(Vector(math.random(-300, -250), math.random(-200, -100), math.random(-200, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
 
-	if self:Ammo1() == 0 then
+	if self:Ammo1() <= 0 then
 		self:Remove()
 		owner:SwitchToDefaultWeapon()
 		return
