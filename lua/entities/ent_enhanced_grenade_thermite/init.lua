@@ -42,7 +42,7 @@ function ENT:Initialize()
         timer.Remove("soundThermiteTimer"..self:EntIndex())
         self:Remove()
     end)
-
+ 
 end
 
 function ENT:Think()

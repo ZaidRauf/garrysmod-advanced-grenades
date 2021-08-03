@@ -30,6 +30,17 @@ function SWEP:Initialize()
 	self.startLowThrow = false
 end
 
+function SWEP:Deploy()
+	local owner = self:GetOwner()
+	if ( not owner:IsValid()  or not owner:Alive() ) then return end
+
+	timer.Create("animTimerIdleDeploy"..self:EntIndex(), 1, 1, function()
+		timer.Remove("animTimerIdleDeploy"..self:EntIndex())
+		if ( not owner:IsValid()  or not owner:Alive() ) then return end
+		self:SendWeaponAnim(ACT_VM_IDLE)
+	end)
+end
+
 -- Called when the left mouse button is pressed
 function SWEP:PrimaryAttack()
 
@@ -140,6 +151,12 @@ function SWEP:ThrowGrenadeHigh()
 		timer.Remove("animTimer1"..self:EntIndex())
 		if ( not owner:IsValid() or not owner:Alive() ) then return end
 		self:SendWeaponAnim(ACT_VM_DRAW)
+
+		timer.Create("animTimerIdleHiThrow"..self:EntIndex(), 1.2, 1, function()
+			timer.Remove("animTimerIdleHiThrow"..self:EntIndex())
+			if ( not owner:IsValid()  or not owner:Alive() ) then return end
+			self:SendWeaponAnim(ACT_VM_IDLE)
+		end)
 	end)
 end
 
@@ -208,5 +225,11 @@ function SWEP:ThrowGrenadeLow()
 		timer.Remove("animTimer2"..self:EntIndex())
 		if ( not owner:IsValid()  or not owner:Alive() ) then return end
 		self:SendWeaponAnim(ACT_VM_DRAW)
+
+		timer.Create("animTimerIdleLoThrow"..self:EntIndex(), 1.2, 1, function()
+			timer.Remove("animTimerIdleLoThrow"..self:EntIndex())
+			if ( not owner:IsValid()  or not owner:Alive() ) then return end
+			self:SendWeaponAnim(ACT_VM_IDLE)
+		end)
 	end)
 end
