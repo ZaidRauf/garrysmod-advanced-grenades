@@ -138,7 +138,7 @@ function SWEP:ThrowGrenadeHigh()
 
 	timer.Create("animTimer1"..self:EntIndex(), 0.4, 1, function()
 		timer.Remove("animTimer1"..self:EntIndex())
-		if ( not owner:IsValid() ) then return end
+		if ( not owner:IsValid() or not owner:Alive() ) then return end
 		self:SendWeaponAnim(ACT_VM_DRAW)
 	end)
 end
@@ -206,7 +206,7 @@ function SWEP:ThrowGrenadeLow()
 
 	timer.Create("animTimer2"..self:EntIndex(), 0.6, 1, function()
 		timer.Remove("animTimer2"..self:EntIndex())
-		if ( not owner:IsValid() ) then return end
+		if ( not owner:IsValid()  or not owner:Alive() ) then return end
 		self:SendWeaponAnim(ACT_VM_DRAW)
 	end)
 end

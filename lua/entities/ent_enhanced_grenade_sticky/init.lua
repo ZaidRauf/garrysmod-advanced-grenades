@@ -55,6 +55,7 @@ function ENT:PhysicsCollide(colData, collider)
 end
 
 function ENT:OnRemove()
+	timer.Remove("explodeTimer"..self:GetName()..self:EntIndex())
     timer.Remove("soundTickTimer"..self:EntIndex())
     self:StopSound(self.TickSound)
 	local explosion = ents.Create( "env_explosion" ) -- The explosion entity
