@@ -8,7 +8,7 @@ SWEP.Primary.DefaultClip	= 6
 SWEP.Primary.Automatic		= false
 SWEP.Primary.Ammo			= "Grenade"
 SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
+SWEP.Secondary.DefaultClip	= 0
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 SWEP.Weight					= 5
@@ -33,7 +33,7 @@ end
 
 function SWEP:Deploy()
 	local owner = self:GetOwner()
-	self.throwTime = CurTime() + 0.25
+	self.throwTime = CurTime() + 0.21
 	if not ( self:IsValid() and owner:IsValid() and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then return end
 
 	timer.Create("animTimerIdleDeploy"..self:EntIndex(), 0.2, 1, function()
@@ -81,8 +81,8 @@ function SWEP:ThrowGrenadeHigh()
 	if ( not owner:IsValid() ) then return end
 
 	self:TakePrimaryAmmo( 1 )
-	self:SetNextPrimaryFire( CurTime() + 1.85 )
-	self:SetNextSecondaryFire( CurTime() + 1.85 )
+	self:SetNextPrimaryFire( CurTime() + 1.82 )
+	self:SetNextSecondaryFire( CurTime() + 1.82 )
 
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:SendWeaponAnim(ACT_VM_THROW)
@@ -165,8 +165,8 @@ function SWEP:ThrowGrenadeLow()
 	if ( not owner:IsValid() ) then return end
 
 	self:TakePrimaryAmmo( 1 )
-	self:SetNextPrimaryFire( CurTime() + 1.85 )
-	self:SetNextSecondaryFire( CurTime() + 1.85 )
+	self:SetNextPrimaryFire( CurTime() + 1.82 )
+	self:SetNextSecondaryFire( CurTime() + 1.82 )
 
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)

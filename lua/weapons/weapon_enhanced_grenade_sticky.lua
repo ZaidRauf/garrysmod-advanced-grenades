@@ -5,3 +5,11 @@ SWEP.Instructions		= "WIP"
 SWEP.Category = "Enhanced Grenades"
 SWEP.Spawnable = true
 SWEP.GrenadeEntity = "ent_enhanced_grenade_sticky"
+SWEP.Primary.Ammo			= "sticky_grenade"
+
+
+hook.Add("Initialize", "expanded_grenade_sticky_ammo", function()
+    game.AddAmmoType( {
+	    name = "sticky_grenade",
+    } )
+end)

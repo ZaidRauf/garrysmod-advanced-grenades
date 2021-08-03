@@ -6,3 +6,12 @@ SWEP.Category = "Enhanced Grenades"
 SWEP.Spawnable = true
 
 SWEP.GrenadeEntity = "ent_enhanced_grenade_smoke_signal"
+
+SWEP.Primary.Ammo			= "smoke_signal_grenade"
+
+
+hook.Add("Initialize", "expanded_grenade_smoke_signal_ammo", function()
+    game.AddAmmoType( {
+	    name = "smoke_signal_grenade",
+    } )
+end)
