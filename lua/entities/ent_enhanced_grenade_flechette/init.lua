@@ -6,7 +6,7 @@ include("shared.lua")
 function ENT:Initialize()
     self.timeToLive = 4.5
     
-    self:SetModel("models/Items/grenadeAmmo.mdl")
+    self:SetModel("models/weapons/w_npcnade.mdl")
     
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
