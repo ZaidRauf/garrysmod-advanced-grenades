@@ -32,12 +32,11 @@ end
 
 function SWEP:Deploy()
 	local owner = self:GetOwner()
-	if ( not owner:IsValid()  or not owner:Alive() ) then return end
+	if not ( self:IsValid() and owner:IsValid() and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then return end
 
 	timer.Create("animTimerIdleDeploy"..self:EntIndex(), 1, 1, function()
 		timer.Remove("animTimerIdleDeploy"..self:EntIndex())
-		if ( not owner:IsValid()  or not owner:Alive() ) then return end
-		self:SendWeaponAnim(ACT_VM_IDLE)
+		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_IDLE) end
 	end)
 end
 
@@ -80,8 +79,8 @@ function SWEP:ThrowGrenadeHigh()
 	if ( not owner:IsValid() ) then return end
 
 	self:TakePrimaryAmmo( 1 )
-	self:SetNextPrimaryFire( CurTime() + 1.6 )
-	self:SetNextSecondaryFire( CurTime() + 1.6 )
+	self:SetNextPrimaryFire( CurTime() + 1.85 )
+	self:SetNextSecondaryFire( CurTime() + 1.85 )
 
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:SendWeaponAnim(ACT_VM_THROW)
@@ -149,13 +148,11 @@ function SWEP:ThrowGrenadeHigh()
 
 	timer.Create("animTimer1"..self:EntIndex(), 0.4, 1, function()
 		timer.Remove("animTimer1"..self:EntIndex())
-		if ( not owner:IsValid() or not owner:Alive() ) then return end
-		self:SendWeaponAnim(ACT_VM_DRAW)
+		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_DRAW) end
 
 		timer.Create("animTimerIdleHiThrow"..self:EntIndex(), 1.2, 1, function()
 			timer.Remove("animTimerIdleHiThrow"..self:EntIndex())
-			if ( not owner:IsValid()  or not owner:Alive() ) then return end
-			self:SendWeaponAnim(ACT_VM_IDLE)
+				if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_IDLE) end
 		end)
 	end)
 end
@@ -166,8 +163,8 @@ function SWEP:ThrowGrenadeLow()
 	if ( not owner:IsValid() ) then return end
 
 	self:TakePrimaryAmmo( 1 )
-	self:SetNextPrimaryFire( CurTime() + 1.6 )
-	self:SetNextSecondaryFire( CurTime() + 1.6 )
+	self:SetNextPrimaryFire( CurTime() + 1.85 )
+	self:SetNextSecondaryFire( CurTime() + 1.85 )
 
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
@@ -223,13 +220,11 @@ function SWEP:ThrowGrenadeLow()
 
 	timer.Create("animTimer2"..self:EntIndex(), 0.6, 1, function()
 		timer.Remove("animTimer2"..self:EntIndex())
-		if ( not owner:IsValid()  or not owner:Alive() ) then return end
-		self:SendWeaponAnim(ACT_VM_DRAW)
+		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_DRAW) end
 
 		timer.Create("animTimerIdleLoThrow"..self:EntIndex(), 1.2, 1, function()
 			timer.Remove("animTimerIdleLoThrow"..self:EntIndex())
-			if ( not owner:IsValid()  or not owner:Alive() ) then return end
-			self:SendWeaponAnim(ACT_VM_IDLE)
+			if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_IDLE) end
 		end)
 	end)
 end
