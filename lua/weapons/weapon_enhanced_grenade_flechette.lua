@@ -1,6 +1,6 @@
 SWEP.Base = "weapon_enhanced_grenade_base"
 SWEP.PrintName			= "Flechette Grenade" -- This will be shown in the spawn menu, and in the weapon selection menu
--- SWEP.Instructions		= "Fires unguided flechettes on detonation"
+SWEP.Instructions		= "Pull Pin, Aim, Throw -> Fires unguided flechettes"
 
 SWEP.Category = "Enhanced Grenades"
 SWEP.Spawnable = true
