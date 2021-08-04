@@ -1,17 +1,19 @@
 include("shared.lua")
 
-function ENT:Draw()
-    self:DrawModel()
-end
-
 function ENT:Initialize()
     self.smokeEmitter = ParticleEmitter( self:GetPos() ) -- Particle emitter in this position
+end
+
+function ENT:Draw()
+    self:DrawModel()
+    render.SetMaterial(self.GrenadeLight)
+    render.DrawSprite(self:GetPos() + self:GetUp() * 4.5, 12.5, 12.5, self.GrenadeColor)
 end
 
 function ENT:Think()
     if self:GetSmokeActive() then
         if IsValid(self.smokeEmitter) then
-            local part = self.smokeEmitter:Add( "effects/yellowflare",  self:GetPos() ) -- Create a new particle at pos
+            local part = self.smokeEmitter:Add( self.SmokeEffect,  self:GetPos() ) -- Create a new particle at pos
             if ( part ) then
                 part:SetDieTime( 10 ) -- How long the particle should "live"
 

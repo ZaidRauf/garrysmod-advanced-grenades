@@ -19,6 +19,8 @@ function ENT:Initialize()
         phys:Wake()
     end
 
+    util.SpriteTrail(self, 0, self.GrenadeColor, false, 1.25, 0, 0.35, 1/1.25 * 0.5, "trails/plasma.vmt")
+
     timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), self.timeToLive, 1, function() 
         self:Remove()
     end)

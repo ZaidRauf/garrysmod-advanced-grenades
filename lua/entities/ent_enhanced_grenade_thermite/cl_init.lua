@@ -2,6 +2,8 @@ include("shared.lua")
 
 function ENT:Draw()
     self:DrawModel()
+    render.SetMaterial(self.GrenadeLight)
+    render.DrawSprite(self:GetPos() + self:GetUp() * 4.5, 12.5, 12.5, self.GrenadeColor)
 end
 
 function ENT:Initialize()
@@ -16,7 +18,7 @@ function ENT:Think()
 
         if IsValid(self.incendiaryEmitter) then
             for i=1,10 do
-                local part = self.incendiaryEmitter:Add( "effects/spark",  self:GetPos() ) -- Create a new particle at pos
+                local part = self.incendiaryEmitter:Add( self.SparkEffect,  self:GetPos() ) -- Create a new particle at pos
                 if ( part ) then
                     part:SetDieTime( 1 ) -- How long the particle should "live"
 

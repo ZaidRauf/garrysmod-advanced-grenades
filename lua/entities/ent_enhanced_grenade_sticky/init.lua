@@ -3,8 +3,8 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-
 function ENT:Initialize()
+
     self.notStuck = true
 
     self:SetModel("models/weapons/w_npcnade.mdl")
@@ -19,6 +19,8 @@ function ENT:Initialize()
     if phys:IsValid() then
         phys:Wake()
     end
+
+    util.SpriteTrail(self, 0, self.GrenadeColor, false, 1.25, 0, 0.35, 1/1.25 * 0.5, "trails/plasma.vmt")
 
     self:EmitSound( self.TickSound )
     timer.Create("soundTickTimer"..self:EntIndex(), 0.4, 0, function() 
