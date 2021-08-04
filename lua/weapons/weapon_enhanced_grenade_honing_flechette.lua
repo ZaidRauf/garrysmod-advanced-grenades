@@ -1,6 +1,6 @@
 SWEP.Base = "weapon_enhanced_grenade_base"
 SWEP.PrintName			= "Honing Flechette Grenade" -- This will be shown in the spawn menu, and in the weapon selection menu
-SWEP.Instructions		= "WIP"
+-- SWEP.Instructions		= "Fires flechettes in a controlled manner at everyone (except the thrower) in its radius"
 
 SWEP.Category = "Enhanced Grenades"
 SWEP.Spawnable = true

@@ -1,6 +1,6 @@
 SWEP.Base = "weapon_enhanced_grenade_base"
 SWEP.PrintName			= "Smoke Signal Grenade" -- This will be shown in the spawn menu, and in the weapon selection menu
-SWEP.Instructions		= "WIP"
+-- SWEP.Instructions		= "Gives off a plume of green smoke when active"
 
 SWEP.Category = "Enhanced Grenades"
 SWEP.Spawnable = true

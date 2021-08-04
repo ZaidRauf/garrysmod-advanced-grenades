@@ -1,6 +1,6 @@
 SWEP.PrintName				= "Enhanced Grenade Base" -- This will be shown in the spawn menu, and in the weapon selection menu
 SWEP.Author					= "Memelord" -- These two options will be shown when you have the weapon highlighted in the weapon selection menu
-SWEP.Instructions			= "Base Grenade"
+SWEP.Instructions			= "Pull Pin, Aim, Throw"
 SWEP.Spawnable 				= false
 SWEP.AdminOnly 				= true
 SWEP.Primary.ClipSize		= -1
