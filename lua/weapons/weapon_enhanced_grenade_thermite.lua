@@ -4,9 +4,7 @@ SWEP.Instructions		= "Pull Pin, Aim, Throw -> Creates light and burns anything t
 SWEP.Category           = "Enhanced Grenades"
 SWEP.Spawnable          = true
 SWEP.GrenadeEntity      = "ent_enhanced_grenade_thermite"
-
-SWEP.Primary.Ammo			= "thermite_grenade"
-
+SWEP.Primary.Ammo		= "thermite_grenade"
 
 hook.Add("Initialize", "expanded_grenade_thermite_ammo", function()
     game.AddAmmoType( {

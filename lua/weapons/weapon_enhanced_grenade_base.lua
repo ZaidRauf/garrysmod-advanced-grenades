@@ -21,9 +21,8 @@ SWEP.DrawCrosshair			= true
 SWEP.ViewModel				= "models/weapons/c_grenade.mdl"
 SWEP.WorldModel				= "models/weapons/w_grenade.mdl"
 SWEP.UseHands 				= true
-
 SWEP.ViewModelFOV			= 54
-SWEP.GrenadeEntity = ""
+SWEP.GrenadeEntity			= ""
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")
@@ -121,24 +120,12 @@ function SWEP:ThrowGrenadeHigh()
 	ent:SetAngles( owner:EyeAngles() + Angle(math.random(-10, 10), 0, math.random(-45, -60)))
 	ent:Spawn()
  
-	-- Now get the physics object. Whenever we get a physics object
-	-- we need to test to make sure its valid before using it.
-	-- If it isn't then we'll remove the entity.
 	local phys = ent:GetPhysicsObject()
 	if ( not phys:IsValid() ) then ent:Remove() return end
-
-	-- local ownerPhys = owner:GetPhysicsObject()
-	-- if ( not ownerPhys:IsValid() ) then ent:Remove() return end
  
-	-- Now we apply the force - so the chair actually throws instead 
-	-- of just falling to the ground. You can play with this value here
-	-- to adjust how fast we throw it.
-	-- Now that this is the last use of the aimvector vector we created,
-	-- we can directly modify it instead of creating another copy
 	aimvec:Mul( 1245 ) -- Happy with how throwing lokos now to add some more forece
 	aimvec:Add( VectorRand( -10, 10 ) ) -- Add a random vector with elements [-10, 10)
 	aimvec:Add(owner:GetVelocity() * 0.90)
-	-- aimvec:Add( ownerPhys:GetVelocity() ) -- Need to account for intertia
 	phys:AddAngleVelocity(Vector(math.random(-500, -250), math.random(-250, -100), math.random(-250, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
 
@@ -179,10 +166,6 @@ function SWEP:ThrowGrenadeLow()
 	if ( not ent:IsValid() ) then return end
 	ent:SetOwner(owner)
 
-	-- This is the same as owner:EyePos() + (self.Owner:GetAimVector() * 16)
-	-- but the vector methods prevent duplicitous objects from being created
-	-- which is faster and more memory efficient
-	-- AimVector is not directly modified as it is used again later in the function
 	local aimvec = owner:GetAimVector()
 
 	local pos = aimvec * 8 -- This creates a new vector object

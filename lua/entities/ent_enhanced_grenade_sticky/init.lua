@@ -27,7 +27,6 @@ function ENT:Initialize()
         self:EmitSound( self.TickSound )
     end)
 
-    -- util.SpriteTrail( self, 0, Color( 255, 0, 0 ), false, 5, 0, 1, 1/5 * 0.5, "trails/laser" )
 end
 
 function ENT:StartTouch(touchEnt)
@@ -47,7 +46,6 @@ function ENT:PhysicsCollide(colData, collider)
         self.notStuck = false;
 
         physObj = self:GetPhysicsObject()
-        -- physObj:SetVelocity(Vector(0, 0, 0))
         physObj:EnableMotion(false)
 
         timer.Create("explodeTimer"..self:GetName()..self:EntIndex(), 2, 1, function() 
