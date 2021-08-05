@@ -1,3 +1,5 @@
+AddCSLuaFile()
+
 SWEP.PrintName				= "Enhanced Grenade Base" -- This will be shown in the spawn menu, and in the weapon selection menu
 SWEP.Author					= "Memelord" -- These two options will be shown when you have the weapon highlighted in the weapon selection menu
 SWEP.Instructions			= "Pull Pin, Aim, Throw"
@@ -23,7 +25,6 @@ SWEP.WorldModel				= "models/weapons/w_grenade.mdl"
 SWEP.UseHands 				= true
 SWEP.ViewModelFOV			= 54
 SWEP.GrenadeEntity			= ""
-AddCSLuaFile()
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")
