@@ -23,6 +23,7 @@ SWEP.WorldModel				= "models/weapons/w_grenade.mdl"
 SWEP.UseHands 				= true
 SWEP.ViewModelFOV			= 54
 SWEP.GrenadeEntity			= ""
+AddCSLuaFile()
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")

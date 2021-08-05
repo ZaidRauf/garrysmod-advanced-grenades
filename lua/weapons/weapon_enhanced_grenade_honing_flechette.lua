@@ -5,6 +5,7 @@ SWEP.Category           = "Enhanced Grenades"
 SWEP.Spawnable          = true
 SWEP.GrenadeEntity      = "ent_enhanced_grenade_honing_flechette"
 SWEP.Primary.Ammo	    = "honing_flechette_grenade"
+AddCSLuaFile()
 
 hook.Add("Initialize", "expanded_grenade_honing_flechette_ammo", function()
     game.AddAmmoType( {
