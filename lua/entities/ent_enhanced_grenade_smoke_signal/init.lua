@@ -46,6 +46,11 @@ function ENT:Initialize()
     end)
 end
 
+function ENT:Use(activator, caller, useType, value)
+    if activator:IsValid() and activator:IsPlayer() then
+        activator:PickupObject(self)
+    end
+end
 
 function ENT:OnRemove()
     self:StopSound(self.SmokeSound)

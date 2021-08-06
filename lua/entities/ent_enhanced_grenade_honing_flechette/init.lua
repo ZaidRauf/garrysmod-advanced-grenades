@@ -31,6 +31,12 @@ function ENT:Initialize()
     end)
 end
 
+function ENT:Use(activator, caller, useType, value)
+    if activator:IsValid() and activator:IsPlayer() then
+        activator:PickupObject(self)
+    end
+end
+
 function ENT:OnRemove()
     timer.Remove("soundTickTimer"..self:EntIndex())
     self:StopSound(self.TickSound)

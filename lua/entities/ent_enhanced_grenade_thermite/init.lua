@@ -47,6 +47,12 @@ function ENT:Initialize()
  
 end
 
+function ENT:Use(activator, caller, useType, value)
+    if activator:IsValid() and activator:IsPlayer() then
+        activator:PickupObject(self)
+    end
+end
+
 function ENT:Think()
     if self:GetIncendiaryActive() then
         for k,v in pairs(ents.FindInSphere(self:GetPos(), 125)) do
