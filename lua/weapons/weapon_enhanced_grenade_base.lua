@@ -25,6 +25,7 @@ SWEP.WorldModel				= "models/weapons/w_grenade.mdl"
 SWEP.UseHands 				= true
 SWEP.ViewModelFOV			= 54
 SWEP.GrenadeEntity			= ""
+SWEP.RollSound 				= Sound("WeaponFrag.Throw")
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")
@@ -66,14 +67,19 @@ function SWEP:Think()
    local ply = self:GetOwner()
    if not IsValid(ply) then return end
    
-   if self.startHighThrow and not ply:KeyDown(IN_ATTACK) then
+	if self.startHighThrow and not ply:KeyDown(IN_ATTACK) then
 		self.startHighThrow = false
 		self:ThrowGrenadeHigh()
 	end
 
-   if self.startLowThrow and not ply:KeyDown(IN_ATTACK2) then
+	if self.startLowThrow and not ply:KeyDown(IN_ATTACK2) then
 		self.startLowThrow = false
-		self:ThrowGrenadeLow()
+
+		if ply:KeyDown(IN_DUCK) then
+			self:ThrowGrenadeRoll()
+		else
+			self:ThrowGrenadeLow()
+		end
 	end
 end
 
@@ -107,10 +113,8 @@ function SWEP:ThrowGrenadeHigh()
 	
 	-- THIS WORKS!!!!
 	local distance = 6.35 -- 6 was pretty good
-	local parallelVec = pos * 1
-	parallelVec:Rotate(Angle(0, owner:EyeAngles().y - 90, 0))
-	parallelVec:Normalize()
-	
+	local parallelVec = owner:EyeAngles():Right()
+
 	pos.x = pos.x + (parallelVec.x * distance)
 	pos.y = pos.y + (parallelVec.y * distance)
 
@@ -119,7 +123,7 @@ function SWEP:ThrowGrenadeHigh()
 	ent:SetPos( pos )
 
 	-- Set the angles to the player'e eye angles. Then spawn it.
-	ent:SetAngles( owner:EyeAngles() + Angle(math.random(-10, 10), 0, math.random(-45, -60)))
+	ent:SetAngles( owner:EyeAngles() + Angle(math.random(-10, 10)) )
 	ent:Spawn()
  
 	local phys = ent:GetPhysicsObject()
@@ -177,9 +181,7 @@ function SWEP:ThrowGrenadeLow()
 	
 	-- THIS WORKS!!!!
 	local distance = 6.35
-	local parallelVec = pos * 1
-	parallelVec:Rotate(Angle(0, owner:EyeAngles().y - 90, 0))
-	parallelVec:Normalize()
+	local parallelVec = owner:EyeAngles():Right()
 	
 	pos.x = pos.x + (parallelVec.x * distance)
 	pos.y = pos.y + (parallelVec.y * distance)
@@ -187,7 +189,7 @@ function SWEP:ThrowGrenadeLow()
 	ent:SetPos( pos )
 
 	-- Set the angles to the player'e eye angles. Then spawn it.
-	ent:SetAngles( owner:EyeAngles() + Angle(math.random(-10, 10), 0, math.random(-45, -60)))
+	ent:SetAngles( owner:EyeAngles() + Angle(math.random(-10, 10)) )
 	ent:Spawn()
 
 	local phys = ent:GetPhysicsObject()
@@ -198,6 +200,67 @@ function SWEP:ThrowGrenadeLow()
 	aimvec:Add(owner:GetVelocity() * 0.65)
 	phys:AddAngleVelocity(Vector(math.random(-300, -250), math.random(-200, -100), math.random(-200, -100))) -- Changed from 500 to 125 to 50
 	phys:ApplyForceCenter( aimvec )
+
+	if self:Ammo1() <= 0 then
+		self:Remove()
+		owner:SwitchToDefaultWeapon()
+		return
+	end
+
+	timer.Create("animTimer2"..self:EntIndex(), 0.6, 1, function()
+		timer.Remove("animTimer2"..self:EntIndex())
+		if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_DRAW) end
+
+		timer.Create("animTimerIdleLoThrow"..self:EntIndex(), 1.2, 1, function()
+			timer.Remove("animTimerIdleLoThrow"..self:EntIndex())
+			if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_IDLE) end
+		end)
+	end)
+end
+
+function SWEP:ThrowGrenadeRoll()
+	local owner = self:GetOwner()
+	if ( not owner:IsValid() ) then return end
+
+	self:TakePrimaryAmmo( 1 )
+	self:SetNextPrimaryFire( CurTime() + 1.82 )
+	self:SetNextSecondaryFire( CurTime() + 1.82 )
+
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+
+	if ( CLIENT ) then return end
+	
+	local ent = ents.Create( self.GrenadeEntity )
+
+	-- Always make sure that created entities are actually created!
+	if ( not ent:IsValid() ) then return end
+	ent:SetOwner(owner)
+
+	local aimangles = owner:GetAngles()
+	aimangles.x = 0
+	local aimvec = aimangles:Forward()
+
+	local pos = aimvec * 8 -- This creates a new vector object
+	pos:Add( owner:EyePos() ) -- This translates the local aimvector to world coordinates
+	pos:Add( Vector(0,0,-15))
+	-- Set the position to the player's eye position plus 16 units forward.
+	
+	ent:SetPos( pos )
+
+	-- Set the angles to the player'e eye angles. Then spawn it.
+	ent:SetAngles( owner:EyeAngles() + Angle(0 ,0, -90))
+	ent:Spawn()
+
+	local phys = ent:GetPhysicsObject()
+	if ( not phys:IsValid() ) then ent:Remove() return end
+
+	aimvec:Mul( 750 ) -- Happy with how throwing lokos now to add some more forece
+	-- aimvec:Add( VectorRand( -2, 2 ) ) -- Add a random vector with elements [-10, 10)
+	aimvec:Add(owner:GetVelocity() * 0.65)
+	phys:AddAngleVelocity(Vector(math.random(10,50), 0, 500)) -- Changed from 500 to 125 to 50
+	phys:ApplyForceCenter( aimvec )
+    self:EmitSound( self.RollSound )
 
 	if self:Ammo1() <= 0 then
 		self:Remove()

@@ -13,3 +13,18 @@ hook.Add("Initialize", "expanded_grenade_sticky_ammo", function()
 	    name = "sticky_grenade",
     } )
 end)
+
+function SWEP:Think()
+   local ply = self:GetOwner()
+   if not IsValid(ply) then return end
+   
+	if self.startHighThrow and not ply:KeyDown(IN_ATTACK) then
+		self.startHighThrow = false
+		self:ThrowGrenadeHigh()
+	end
+
+	if self.startLowThrow and not ply:KeyDown(IN_ATTACK2) then
+		self.startLowThrow = false
+		self:ThrowGrenadeLow()
+	end
+end
