@@ -1,3 +1,5 @@
+
+
 AddCSLuaFile()
 
 SWEP.PrintName				= "Enhanced Grenade Base" -- This will be shown in the spawn menu, and in the weapon selection menu
@@ -239,28 +241,36 @@ function SWEP:ThrowGrenadeRoll()
 
 	local aimangles = owner:GetAngles()
 	aimangles.x = 0
-	local aimvec = aimangles:Forward()
 
-	local pos = aimvec * 8 -- This creates a new vector object
-	pos:Add( owner:EyePos() ) -- This translates the local aimvector to world coordinates
-	pos:Add( Vector(0,0,-15))
-	-- Set the position to the player's eye position plus 16 units forward.
-	
-	ent:SetPos( pos )
+	local vecSrc = owner:GetPos()
+	local vecFacing = aimangles:Forward()
 
-	-- Set the angles to the player'e eye angles. Then spawn it.
+	trData = {}
+	trData["start"] = vecSrc
+	trData["endpos"] = vecSrc - Vector(0, 0, 16)
+	trData["mask"] = MASK_PLAYERSOLID
+	trData["collisiongroup"] = COLLISION_GROUP_NONE
+
+	tr = util.TraceLine(trData)
+	if tr["Fraction"] != 1 then
+		local tangent = vecFacing:Cross(tr["HitNormal"])
+		vecFacing = tr["HitNormal"]:Cross(tangent)
+	end
+	vecSrc:Add(vecFacing * 18)
+
+	local vecThrow = owner:GetVelocity()
+	vecThrow:Add(vecFacing * 700)
+
+	ent:SetPos(vecSrc + Vector(0, 0, 5))
 	ent:SetAngles( owner:EyeAngles() + Angle(0 ,0, -90))
 	ent:Spawn()
 
 	local phys = ent:GetPhysicsObject()
 	if ( not phys:IsValid() ) then ent:Remove() return end
 
-	aimvec:Mul( 750 ) -- Happy with how throwing lokos now to add some more forece
-	-- aimvec:Add( VectorRand( -2, 2 ) ) -- Add a random vector with elements [-10, 10)
-	aimvec:Add(owner:GetVelocity() * 0.65)
-	phys:AddAngleVelocity(Vector(math.random(10,50), 0, 500)) -- Changed from 500 to 125 to 50
-	phys:ApplyForceCenter( aimvec )
-    self:EmitSound( self.RollSound )
+	phys:ApplyForceCenter( vecThrow )
+	phys:AddAngleVelocity(Vector(math.random(10,50), 0, 500))
+
 
 	if self:Ammo1() <= 0 then
 		self:Remove()
