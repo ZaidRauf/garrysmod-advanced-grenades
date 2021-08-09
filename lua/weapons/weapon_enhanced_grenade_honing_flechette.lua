@@ -1,3 +1,5 @@
+if ( !IsMounted( "ep2" ) ) then return end
+
 AddCSLuaFile()
 
 SWEP.Base               = "weapon_enhanced_grenade_base"
