@@ -48,7 +48,9 @@ function ENT:OnRemove()
     local numFlechettes = 35 -- Use to be 100
 
     for k,v in pairs(ents.FindInSphere(self:GetPos(), 350)) do
-        if (v:IsPlayer() and not v == self:GetOwner()) or v:IsNPC() or v:IsNextBot() then
+        if v == self:GetOwner() then continue end
+        
+        if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
             playerTable[k] = v
             entityCount = entityCount + 1
         end

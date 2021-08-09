@@ -1,5 +1,3 @@
-
-
 AddCSLuaFile()
 
 SWEP.PrintName				= "Enhanced Grenade Base" -- This will be shown in the spawn menu, and in the weapon selection menu
@@ -37,7 +35,6 @@ end
 
 function SWEP:Deploy()
 	local owner = self:GetOwner()
-	self.throwTime = CurTime() + 0.21
 	if not ( self:IsValid() and owner:IsValid() and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then return end
 
 	timer.Create("animTimerIdleDeploy"..self:EntIndex(), 0.2, 1, function()
@@ -49,7 +46,7 @@ end
 -- Called when the left mouse button is pressed
 function SWEP:PrimaryAttack()
 
-	if not self.startLowThrow and not self.startHighThrow and CurTime() > self.throwTime then
+	if not self.startLowThrow and not self.startHighThrow then
 		self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
 		self.startHighThrow = true
 	end
@@ -58,7 +55,7 @@ end
 
 function SWEP:SecondaryAttack()
 
-	if not self.startLowThrow and not self.startHighThrow and CurTime() > self.throwTime then
+	if not self.startLowThrow and not self.startHighThrow then
 		self:SendWeaponAnim(ACT_VM_PULLBACK_LOW)
 		self.startLowThrow = true
 	end
@@ -153,7 +150,6 @@ function SWEP:ThrowGrenadeHigh()
 		end)
 	end)
 end
-
 
 function SWEP:ThrowGrenadeLow()
 	local owner = self:GetOwner()
@@ -270,7 +266,6 @@ function SWEP:ThrowGrenadeRoll()
 
 	phys:ApplyForceCenter( vecThrow )
 	phys:AddAngleVelocity(Vector(math.random(10,50), 0, 500))
-
 
 	if self:Ammo1() <= 0 then
 		self:Remove()
