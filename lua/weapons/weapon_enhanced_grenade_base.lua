@@ -256,8 +256,11 @@ function SWEP:ThrowGrenadeRoll()
 
 	local vecThrow = owner:GetVelocity()
 	vecThrow:Add(vecFacing * 700)
+	
+	local backwards = (-owner:GetForward()) * 10
+	backwards.z = 0
 
-	ent:SetPos(vecSrc + Vector(0, 0, 5))
+	ent:SetPos(vecSrc + Vector(0, 0, 5) + backwards)
 	ent:SetAngles( owner:EyeAngles() + Angle(0 ,0, -90))
 	ent:Spawn()
 
