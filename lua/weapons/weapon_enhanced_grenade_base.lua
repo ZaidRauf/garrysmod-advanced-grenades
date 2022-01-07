@@ -26,6 +26,8 @@ SWEP.UseHands 				= true
 SWEP.ViewModelFOV			= 54
 SWEP.GrenadeEntity			= ""
 SWEP.RollSound 				= Sound("WeaponFrag.Throw")
+SWEP.BodyMaterial	 		= 'phoenix_storms/wood'
+-- SWEP.PinMaterial	 		= nil
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")
@@ -285,4 +287,15 @@ function SWEP:ThrowGrenadeRoll()
 			if ( self:IsValid() and owner:IsValid()  and owner:Alive() and owner:GetActiveWeapon():GetPrintName() == self.PrintName ) then self:SendWeaponAnim(ACT_VM_IDLE) end
 		end)
 	end)
+end
+
+function SWEP:PreDrawViewModel(vm, ply, wep)
+    vm:SetSubMaterial(3, self.BodyMaterial)
+	-- vm:SetSubMaterial(3, SWEP.PinMaterial)
+end
+
+function SWEP:ViewModelDrawn(vm)
+    if vm:IsValid() then
+        vm:SetSubMaterial()
+    end
 end

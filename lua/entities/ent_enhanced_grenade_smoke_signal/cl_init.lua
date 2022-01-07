@@ -2,6 +2,7 @@ include("shared.lua")
 
 function ENT:Initialize()
     self.smokeEmitter = ParticleEmitter( self:GetPos() ) -- Particle emitter in this position
+    -- self:SetMaterial("phoenix_storms/wood") -- Placeholder to test changing material
 end
 
 function ENT:Draw()

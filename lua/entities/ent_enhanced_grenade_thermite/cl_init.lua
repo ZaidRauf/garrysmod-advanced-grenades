@@ -7,6 +7,7 @@ function ENT:Draw()
 end
 
 function ENT:Initialize()
+	self:SetSubMaterial(0, 'test')
     self.incendiaryEmitter = ParticleEmitter( self:GetPos() ) -- Particle emitter in this position
     self.dlight = nil
 end
