@@ -8,6 +8,8 @@ SWEP.Spawnable          = true
 SWEP.GrenadeEntity      = "ent_enhanced_grenade_thermite"
 SWEP.Primary.Ammo		= "thermite_grenade"
 SWEP.BodyMaterial	 	= 'test'
+-- SWEP.PinMaterial	 	= 'test'
+SWEP.WorldMaterial	 	= 'test'
 
 -- local wave = Material( "test" )
 

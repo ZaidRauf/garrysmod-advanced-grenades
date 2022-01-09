@@ -45,6 +45,12 @@ function ENT:PhysicsCollide(colData, collider)
     if self.notStuck and (colData.HitEntity:EntIndex() == 0) then
         self.notStuck = false;
 
+        if colData.Speed > 300 then
+            local soundNumber = math.random(3)
+            local volumeCalc = math.min(1, colData.Speed / 500)
+            self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard"..soundNumber..".wav"), 75, 100, volumeCalc)
+        end
+
         physObj = self:GetPhysicsObject()
         physObj:EnableMotion(false)
 

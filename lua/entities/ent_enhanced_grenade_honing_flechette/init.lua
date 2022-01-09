@@ -113,3 +113,11 @@ function ENT:OnRemove()
 	explosion:SetKeyValue( "iMagnitude", "10" ) -- the magnitude of the explosion
 	explosion:Fire( "Explode", 0, 0 ) -- explode
 end
+
+function ENT:PhysicsCollide(colData, collider)    
+    if colData.Speed > 300 then
+        local soundNumber = math.random(3)
+        local volumeCalc = math.min(1, colData.Speed / 500)
+        self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard"..soundNumber..".wav"), 75, 100, volumeCalc)
+    end
+end
