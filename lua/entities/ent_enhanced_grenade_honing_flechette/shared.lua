@@ -5,3 +5,4 @@ ENT.Spawnable = false
 ENT.TickSound = Sound( "weapons/grenade/tick1.wav" )
 ENT.GrenadeLight = Material("sprites/light_glow02_add")
 ENT.GrenadeColor = Color(110, 228, 236)
+ENT.WorldMaterial = 'phoenix_storms/wood'

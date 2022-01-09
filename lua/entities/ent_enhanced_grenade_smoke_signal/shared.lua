@@ -8,6 +8,7 @@ ENT.SmokeEffect = Material("particle/particle_smokegrenade")
 ENT.SoundTimer = CurTime() + 4.5
 ENT.GrenadeLight = Material("sprites/light_glow02_add")
 ENT.GrenadeColor = Color(0, 255, 0)
+ENT.WorldMaterial = 'phoenix_storms/wood'
 
 function ENT:SetupDataTables()
     self:NetworkVar("Bool", 0, "SmokeActive")
