@@ -1,5 +1,9 @@
 include("shared.lua")
 
+function ENT:Initialize()
+	self:SetSubMaterial(0, self.WorldMaterial)
+end
+
 function ENT:Draw()
     self:DrawModel()
     render.SetMaterial(self.GrenadeLight)

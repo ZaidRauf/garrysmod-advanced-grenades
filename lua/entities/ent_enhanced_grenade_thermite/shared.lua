@@ -8,6 +8,7 @@ ENT.SparkEffect = Material("effects/spark")
 ENT.SoundTimer = CurTime() + 4.5
 ENT.GrenadeLight = Material("sprites/light_glow02_add")
 ENT.GrenadeColor = Color(255, 255, 255)
+ENT.WorldMaterial = 'test'
 
 function ENT:SetupDataTables()
     self:NetworkVar("Bool", 0, "IncendiaryActive")

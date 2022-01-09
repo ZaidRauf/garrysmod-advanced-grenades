@@ -1,6 +1,7 @@
 include("shared.lua")
 
 function ENT:Initialize()
+	self:SetSubMaterial(0, self.WorldMaterial)
     self.smokeEmitter = ParticleEmitter( self:GetPos() ) -- Particle emitter in this position
 end
 
