@@ -20,7 +20,7 @@ function ENT:Initialize()
         phys:Wake()
     end
 
-    util.SpriteTrail(self, 0, self.GrenadeColor, false, 1.25, 0, 0.35, 1/1.25 * 0.5, "trails/plasma.vmt")
+    util.SpriteTrail(self, 0, self.GrenadeColor, false, 1.25, 0, 0.35, 1/1.25 * 0.5, "trails/laser.vmt")
 
     self:EmitSound( self.TickSound )
     timer.Create("soundTickTimer"..self:EntIndex(), 0.4, 0, function() 

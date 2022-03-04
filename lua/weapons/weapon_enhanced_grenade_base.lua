@@ -27,8 +27,8 @@ SWEP.ViewModelFOV			= 54
 SWEP.GrenadeEntity			= ""
 SWEP.RollSound 				= Sound("WeaponFrag.Throw")
 SWEP.BodyMaterial	 		= 'phoenix_storms/wood'
--- SWEP.PinMaterial	 		= 'models/shadertest/shader5'
-SWEP.WorldMaterial	 		= 'phoenix_storms/wood'
+SWEP.PinMaterial	 		= 'models/shadertest/shader5'
+SWEP.WorldMaterial	 		= 'test_w'
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")
@@ -291,7 +291,7 @@ function SWEP:ThrowGrenadeRoll()
 end
 
 function SWEP:PreDrawViewModel(vm, ply, wep)
-	-- vm:SetSubMaterial(1, self.PinMaterial)
+	vm:SetSubMaterial(1, self.PinMaterial)
     vm:SetSubMaterial(3, self.BodyMaterial)
 end
 
