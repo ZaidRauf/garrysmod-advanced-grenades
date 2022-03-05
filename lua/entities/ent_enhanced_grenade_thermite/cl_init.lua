@@ -58,5 +58,5 @@ end
 
 function ENT:OnRemove()
     self:StopSound(self.ThermiteSound)
-    self.incendiaryEmitter:Finish()
+    if IsValid(self.incendiaryEmitter) then self.incendiaryEmitter:Finish() end
 end
