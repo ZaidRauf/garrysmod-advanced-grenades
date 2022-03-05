@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/items/w_grenadesheet"
+	"$model" 1
+	"$color2" "[0.2820 0.5783 3.5459]"
+}

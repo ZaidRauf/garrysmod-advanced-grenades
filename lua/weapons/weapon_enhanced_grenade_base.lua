@@ -28,7 +28,7 @@ SWEP.GrenadeEntity			= ""
 SWEP.RollSound 				= Sound("WeaponFrag.Throw")
 SWEP.BodyMaterial	 		= 'phoenix_storms/wood'
 SWEP.PinMaterial	 		= 'models/shadertest/shader5'
-SWEP.WorldMaterial	 		= 'test_w'
+SWEP.WorldMaterial	 		= 'phoenix_storms/wood'
 
 function SWEP:Initialize()
 	self:SetHoldType("grenade")
