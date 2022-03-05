@@ -39,5 +39,5 @@ end
 
 function ENT:OnRemove()
     self:StopSound(self.SmokeSound)
-    self.smokeEmitter:Finish()
+    if IsValid(self.smokeEmitter) then self.smokeEmitter:Finish() end
 end
