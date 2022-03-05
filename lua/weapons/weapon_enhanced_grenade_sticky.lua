@@ -7,6 +7,9 @@ SWEP.Category               = "Enhanced Grenades"
 SWEP.Spawnable              = true
 SWEP.GrenadeEntity          = "ent_enhanced_grenade_sticky"
 SWEP.Primary.Ammo			= "sticky_grenade"
+SWEP.BodyMaterial	 		= 'enhanced_grenade_sticky/sticky_grenade_body'
+SWEP.PinMaterial	 		= 'enhanced_grenade_sticky/sticky_grenade_handle'
+SWEP.WorldMaterial	 		= 'enhanced_grenade_sticky/sticky_grenade_w'
 
 hook.Add("Initialize", "expanded_grenade_sticky_ammo", function()
     game.AddAmmoType( {

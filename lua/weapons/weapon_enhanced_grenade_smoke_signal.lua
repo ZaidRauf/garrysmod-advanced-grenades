@@ -7,6 +7,9 @@ SWEP.Category           = "Enhanced Grenades"
 SWEP.Spawnable          = true
 SWEP.GrenadeEntity      = "ent_enhanced_grenade_smoke_signal"
 SWEP.Primary.Ammo		= "smoke_signal_grenade"
+SWEP.BodyMaterial	 	= 'enhanced_grenade_smoke/smoke_grenade_body'
+SWEP.PinMaterial	 	= 'enhanced_grenade_smoke/smoke_grenade_handle'
+SWEP.WorldMaterial	 	= 'enhanced_grenade_smoke/smoke_grenade_w'
 
 -- function SWEP:PreDrawViewModel(vm, ply, weapon)
 --     local logoWhitePNG = Material("grenade_body_thermite.png", "noclamp smooth")

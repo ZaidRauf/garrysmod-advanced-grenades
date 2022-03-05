@@ -7,7 +7,8 @@ function ENT:Initialize()
     self.timeToLive = 4.5
     
     self:SetModel("models/weapons/w_npcnade.mdl")
-    
+    self:SetSubMaterial(0, self.WorldMaterial)
+
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)

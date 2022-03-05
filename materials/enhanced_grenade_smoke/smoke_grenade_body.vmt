@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/weapons/v_grenade/grenade body"
+	"$halflambert" "1"
+	"$color2" "[1.2565 0.0014 0.2176]"
+}

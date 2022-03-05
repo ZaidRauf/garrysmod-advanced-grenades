@@ -9,6 +9,10 @@ SWEP.Category           = "Enhanced Grenades"
 SWEP.Spawnable          = true
 SWEP.GrenadeEntity      = "ent_enhanced_grenade_flechette"
 SWEP.Primary.Ammo	    = "flechette_grenade"
+SWEP.BodyMaterial	 	= 'enhanced_grenade_flechette/flechette_grenade_body'
+SWEP.PinMaterial	 	= 'enhanced_grenade_flechette/flechette_grenade_handle'
+SWEP.WorldMaterial	 	= 'enhanced_grenade_flechette/flechette_grenade_w'
+
 
 hook.Add("Initialize", "expanded_grenade_flechette_ammo", function()
     game.AddAmmoType( {
