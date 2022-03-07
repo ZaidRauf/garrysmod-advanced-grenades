@@ -13,6 +13,9 @@ SWEP.BodyMaterial	 	= 'enhanced_grenade_honing_flechette/honing_flechette_grenad
 SWEP.PinMaterial	 	= 'enhanced_grenade_honing_flechette/honing_flechette_grenade_handle'
 SWEP.WorldMaterial	 	= 'enhanced_grenade_honing_flechette/honing_flechette_grenade_w'
 
+game.AddParticles( "particles/hunter_flechette.pcf" )
+game.AddParticles( "particles/hunter_projectile.pcf" )
+
 hook.Add("Initialize", "expanded_grenade_honing_flechette_ammo", function()
     game.AddAmmoType( {
 	    name = "honing_flechette_grenade",
