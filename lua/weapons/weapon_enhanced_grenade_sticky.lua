@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.Base                   = "weapon_enhanced_grenade_base"
 SWEP.PrintName			    = "Sticky Grenade" -- This will be shown in the spawn menu, and in the weapon selection menu
 SWEP.Instructions		    = "Pull Pin, Aim, Throw -> Sticks to whatever it hits"
-SWEP.Category               = "Enhanced Grenades"
+SWEP.Category               = "Advanced Grenades"
 SWEP.Spawnable              = true
 SWEP.GrenadeEntity          = "ent_enhanced_grenade_sticky"
 SWEP.Primary.Ammo			= "sticky_grenade"

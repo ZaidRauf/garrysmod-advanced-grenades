@@ -1,0 +1,11 @@
+{
+	"title"		:	"Advanced Grenade Pack",
+	"type"		:	"weapon",
+	"tags"		:	["fun"],
+	"ignore"	:
+	[
+		".gitignore",
+		"LICENSE",
+		"README.md"
+	]
+}
