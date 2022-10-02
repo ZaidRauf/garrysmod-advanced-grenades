@@ -11,28 +11,6 @@ SWEP.BodyMaterial	 	= 'enhanced_grenade_thermite/thermite_body'
 SWEP.PinMaterial	 	= 'enhanced_grenade_thermite/thermite_handle'
 SWEP.WorldMaterial	 	= 'enhanced_grenade_thermite/thermite_w'
 
--- local wave = Material( "test" )
-
--- hook.Add( "HUDPaint", "HUDPaint_DrawATexturedBox", function()
--- 	surface.SetMaterial( wave )
--- 	surface.SetDrawColor( 255, 255, 255, 255 )
--- 	surface.DrawTexturedRect( 50, 50, 128, 128 )
--- end )
-
--- function SWEP:PreDrawViewModel(vm, ply, wep)
---     vm:SetSubMaterial(3, 'test')
--- end
-
--- function SWEP:ViewModelDrawn(vm)
---     if vm:IsValid() then
---         vm:SetSubMaterial()
---     end
--- end
-
--- function SWEP:Initialize()
--- 	self:GetOwner():GetViewModel():SetSubMaterial(3, 'test')
--- end
-
 hook.Add("Initialize", "expanded_grenade_thermite_ammo", function()
     game.AddAmmoType( {
 	    name = "thermite_grenade",
